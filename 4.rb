@@ -36,80 +36,57 @@ require 'csv'
 
 
 
-# students = CSV.parse(File.read("students.csv"), headers: true)
-# parents = CSV.parse(File.read("parents.csv"), headers: true)
+# Parse the csv files
+parents_csv = CSV.parse(File.read("parents.csv"), headers: true)
+students_csv = CSV.parse(File.read("students.csv"), headers: true)
 
 
-# data1 = students.group_by{|r| r["student_id"]}
-# data2 = parents.group_by{|r| r["student_id"]}
-
-# joined_data = data1.keys.sort.map do |student|
-#     data1["student_id"].merge(data2["student_id"])
-# end
-
-parents_csv = CSV.read("parents.csv")
-students_csv = CSV.read("students.csv")
-
-
-parent_si=[]
-student_si=[]
-
-parents_csv.filter do |x|
-    parent_si.push(x[1])
-end
+# storing the student IDs in an array
+student_ids=[]
 
 students_csv.filter do |x|
-    student_si.push(x[1])
+    student_ids.push(x["student_id"])
 end
 
-students_with_parents = student_si & parent_si
-
 parents_no_contact = []
+parents_with_contact=[]
+
+# Storing parents with no contact information in an array
 
 parents_csv.filter do |x|
-    if(x[4] == nil && x[5] == nil)
+    if(x["email"] == nil && x["mobile"] == nil )
         parents_no_contact.push(x[1])
+    end
+end
+
+# Storing student_ids of parents with some type of contact information in an array
+
+parents_csv.filter do |x|
+    if(x["email"] != nil || x["mobile"] != nil )
+        parents_with_contact.push(x[1])
+    end
+end
+
+# Comparing the student IDs to the parents with contact information, and returning remaining students with no parents
+
+students_with_no_parents = student_ids - parents_with_contact
+
+
+students_csv.filter do |x|
+    students_with_no_parents.filter do |i|
+        if(x["student_id"] == i)
+            puts "#{x["student_id"]} #{x["FirstName"]} #{x["LastName"]}"
+        end
     end
 end
 
 # filters through the students, matches them with the parents who have no contact info, returns the necessary student arrtributes that match
 students_csv.filter do |x|
     parents_no_contact.filter do |i|
-         if(x[1] == i)
-            # puts  x[1]
-            # puts  x[3]
-            # puts  x[4] 
+         if(x["student_id"] == i)
+            puts "#{x["student_id"]} #{x["FirstName"]} #{x["LastName"]}"
          end
     end
 end
 
-# sorted_students = student_si.sort
-# sorted_parents = parent_si.sort
 
-
-# students_csv.filter do |x|
-#     parents_csv.filter do |i|
-        
-#         end
-#     end
-# end
-
-
-
-
-# spreaded = [...student_si, ...parent_si]
-#     spreaded.filter do |x|
-#         puts !(student_si.includes(x) && parent_si.includes(x))
-#     end
-
-# trial_zip = student_si.zip(parent_si)
-
-
-
-# for i in 0..file1_lines.size
-#   if (file1_lines[0][1] == file2_lines[0][1])
-#     puts "Same #{file1_lines[i]}"
-#   else
-#     puts "#{file1_lines[i]} != #{file2_lines[i]}"
-#   end
-# end
