@@ -1,5 +1,4 @@
 require 'csv'
-# require 'set'
 
 
 #  2: Print a list of students (student_id, first_name, last_name) who do not have a cell phone number.
