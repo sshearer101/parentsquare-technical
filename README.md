@@ -1,4 +1,4 @@
-This technical assessment project was completed using Ruby.
+This technical assessment project was completed using Ruby 3.0.0.
 
 Each of the individual challenges have their own files.
 
