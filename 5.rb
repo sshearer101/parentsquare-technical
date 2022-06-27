@@ -15,10 +15,10 @@ no_students_enrolled_sections =  sections_section_ids - rosters_section_ids
 
 # Filter through all the sections and match them with the sections that have no students, and return the values of those sections
 # Currently there are no sections without students, but if that changes, this should return the correct results.
-sections_csv.filter do |x|
-    no_students_enrolled_sections.filter do |i|
-        if(x["section_id"] == i)
-            puts "#{x["school_id"]} #{x["section_id"]} #{x["staff_id"]} #{x["course_name"]}"
+sections_csv.filter do |section|
+    no_students_enrolled_sections.filter do |x|
+        if(section["section_id"] == x)
+            puts "#{section["school_id"]} #{section["section_id"]} #{section["staff_id"]} #{section["course_name"]}"
         end
     end
 end

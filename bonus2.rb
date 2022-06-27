@@ -11,16 +11,16 @@ student_cellphones = []
 staff_mobiles = []
 parents_mobiles = []
 
-students_csv.filter do |x|
-    student_cellphones.push(x["cellphone"])
+students_csv.filter do |student|
+    student_cellphones.push(student["cellphone"])
 end
 
-staff_csv.filter do |x|
-    staff_mobiles.push(x["mobile"])
+staff_csv.filter do |staff|
+    staff_mobiles.push(staff["mobile"])
 end
 
-parents_csv.filter do |x|
-    parents_mobiles.push(x["mobile"])
+parents_csv.filter do |parent|
+    parents_mobiles.push(parent["mobile"])
 end
 
 # Create sets of each phone numbers
